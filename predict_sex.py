@@ -41,5 +41,43 @@ elif np.cumprod(resultmale)[2]<np.cumprod(resultfemale)[2]:
     print('女')
 else:
     print('不确定')
+    
+    
+    
+#使用sklearn中的朴素贝叶斯算法计算
+#1、高斯朴素贝叶斯
+from sklearn.naive_bayes import GaussianNB
+
+X=train.iloc[:,1:]
+y=train.iloc[:,0]
+
+clf=GaussianNB()
+clf.fit(X,y)
+
+clf.set_params(priors=[0.5, 0.5])
+
+print(clf.predict([[6,130,8]]))
 
 
+#2、多项式朴素贝叶斯  
+from sklearn.naive_bayes import MultinomialNB
+
+#X=train.iloc[:,1:]
+#y=train.iloc[:,0]
+
+clf2=MultinomialNB(alpha=2.0,class_prior=None,fit_prior=False)
+clf2.fit(X,y)
+
+print(clf2.predict([[6,130,8]]))
+
+
+#3、伯努利朴素贝叶斯  不论是test数据还是train的数据，预测的结果都是0 ，是不是说明该模型对于该数据是不合适的？？
+from sklearn.naive_bayes import BernoulliNB
+
+#X=train.iloc[:,1:]
+#y=train.iloc[:,0]
+
+clf3=BernoulliNB()
+clf3.fit(X,y)
+
+print(clf3.predict([X.iloc[7,:]]))
